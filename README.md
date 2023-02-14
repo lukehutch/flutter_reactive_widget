@@ -4,6 +4,21 @@ Simple state management / reactive state tracking for Flutter, reducing the boil
 
 ## Usage
 
+Depend upon this github project in `pubspec.yaml`:
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_reactive_widget:
+    git:
+      url: https://github.com/lukehutch/flutter_reactive_widget.git
+      ref: main
+```
+
+Then run `flutter pub get`.
+
 Import the library:
 
 ```dart
