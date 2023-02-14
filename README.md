@@ -50,11 +50,13 @@ Then you can use  `PersistentReactiveValue` rather than `ReactiveValue`:
 final counter = PersistentReactiveValue<int>(/* key */ "counter", /* defaultValue */ 0);
 ```
 
-`counter.value` will be set to the default value `0` if it has never been set before, but if it has been set before in a previous run of the app, the previous value will be recovered from `SharedPreferences`. Whenever `counter.value` is set in future, not only is any wrapping `ReactiveWidget` updated, but the new value is asynchronously written through to the `SharedPreferences` persistence cache, using the key `"counter"`.
+`counter.value` will be set to the default value `0` if it has never been set before, but if it has been set before in a previous run of the app, the previous value will be recovered from `SharedPreferences`, using the key `"counter"`.
+
+Whenever `counter.value` is set in future, not only is any wrapping `ReactiveWidget` updated, but the new value is asynchronously written through to the `SharedPreferences` persistence cache, using the same key.
 
 ## Where to store state
 
-There are good suggestions in [this Medium post](https://suragch.medium.com/flutter-state-management-for-minimalists-4c71a2f2f0c1) about how to use [`GetIt`](https://pub.dev/packages/get_it) to organize state management, using a singleton service locator pattern. For example:
+There are good suggestions in [this Medium post](https://suragch.medium.com/flutter-state-management-for-minimalists-4c71a2f2f0c1) about how to use [`GetIt`](https://pub.dev/packages/get_it) to organize state in your application. Applying that idea to `flutter_reactive_widget`:
 
 #### `main.dart`:
 
@@ -62,6 +64,7 @@ There are good suggestions in [this Medium post](https://suragch.medium.com/flut
 import './service_locator.dart';
 
 main() async {
+  await PersistentReactiveValue.init();
   setUpGetIt();
   runApp(App());
 }
