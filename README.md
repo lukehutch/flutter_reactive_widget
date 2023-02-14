@@ -10,7 +10,6 @@ Depend upon this github project in `pubspec.yaml`:
 dependencies:
   flutter:
     sdk: flutter
-
   flutter_reactive_widget:
     git:
       url: https://github.com/lukehutch/flutter_reactive_widget.git
