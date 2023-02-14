@@ -72,6 +72,8 @@ final counter = PersistentReactiveValue<int>(/* key */ "counter", /* defaultValu
 
 Whenever `counter.value` is set in future, not only is any wrapping `ReactiveWidget` updated, but the new value is asynchronously written through to the `SharedPreferences` persistence cache, using the same key.
 
+Note that for `PersistentReactiveValue<T>`, `T` cannot be a nullable type (`T?`), since null values cannot be distinguished from a value not being present in `SharedPreferences`. You may need to store the empty string rather than `null` for `PersistentReactiveValue<String>`, for example. Also, there is no way to unset a value to return to the default once the value has been set.
+
 ## Where to store state
 
 There are good suggestions in [this Medium post](https://suragch.medium.com/flutter-state-management-for-minimalists-4c71a2f2f0c1) about how to use [`GetIt`](https://pub.dev/packages/get_it) to organize state in your application. Applying that idea to `flutter_reactive_widget`:
