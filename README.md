@@ -61,12 +61,13 @@ There are good suggestions in [this Medium post](https://suragch.medium.com/flut
 #### `main.dart`:
 
 ```dart
+import 'package:my_app/pages/home_page.dart';
 import './service_locator.dart';
 
 main() async {
   await PersistentReactiveValue.init();
   setUpGetIt();
-  runApp(App());
+  runApp(HomePage());
 }
 ```
 
