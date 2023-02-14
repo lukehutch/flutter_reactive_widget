@@ -35,14 +35,15 @@ Any event handler that modifies `counter.value` will now trigger the `ReactiveWi
 
 You can also persist values across app restarts by using `PersistentReactiveValue` rather than `ReactiveValue`.
 
-First in `main`, initialize `PersistentReactiveValue` (which loads cached values from the backing store).
+First in `main`, you need to initialize `WidgetsFlutterBinding` and then you need to call `await PersistentReactiveValue.init()` (which loads any persisted values from the backing store).
 
 ```dart
 main() async {
   // Both of the following lines are needed, in this order
   WidgetsFlutterBinding.ensureInitialized();
   await PersistentReactiveValue.init();
-
+  
+  // Then run the app
   runApp(App());
 }
 ```
