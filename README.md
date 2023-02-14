@@ -10,7 +10,7 @@ Import the library:
 import 'package:flutter_reactive_widget/flutter_reactive_widget.dart';
 ```
 
-Declare your state using `StatefulValue<T>` (which extends `ValueNotifier<T>`):
+Declare your state using `StatefulValue<T>` (which extends [`ValueNotifier<T>`](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html)):
 
 ```dart
 final counter = ReactiveValue<int>(0);
