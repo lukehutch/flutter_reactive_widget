@@ -20,7 +20,7 @@ Then simply wrap any code that reads `counter.value` in a `ReactiveWidget`:
 
 ```dart
 ReactiveWidget(
-  (BuildContext context) => Text(
+  () => Text(
     '${counter.value}',
     style: const TextStyle(fontSize: 20),
   ),

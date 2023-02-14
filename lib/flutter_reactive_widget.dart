@@ -9,8 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// A reactive widget. Will be rebuilt when the value of any [ReactiveValue] object
 /// read by this `ReactiveWidget` is  changed.
 class ReactiveWidget extends StatefulWidget {
-  final Widget Function(BuildContext context) _build;
-  const ReactiveWidget(Widget Function(BuildContext context) build, {super.key})
+  final Widget Function() _build;
+  const ReactiveWidget(Widget Function() build, {super.key})
       : _build = build;
 
   @override
@@ -43,7 +43,7 @@ class _ReactiveWidgetState extends State<ReactiveWidget> {
     ReactiveValue._currReactiveWidgetState = this;
     try {
       // Call ReactiveWidget.build()
-      _cachedWidget = (context.widget as ReactiveWidget)._build(context);
+      _cachedWidget = (context.widget as ReactiveWidget)._build();
       return _cachedWidget!;
     } finally {
       ReactiveValue._currReactiveWidgetState = null;
