@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ReactiveWidget(
-            (BuildContext context) => Text(
+            () => Text(
               '${counter.value}',
               style: const TextStyle(fontSize: 20),
             ),
