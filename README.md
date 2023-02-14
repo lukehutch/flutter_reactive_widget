@@ -40,3 +40,7 @@ final counter = PersistentReactiveValue<int>(/* key */ "counter", /* defaultValu
 ```
 
 Here `"counter" is used as a unique key to store the value in `SharedPreferences`. Initially `counter.value` will be set to the default value `0`, but then asynchronously, the key `counter` is looked up in `SharedPreferences`, and if present, `counter.value` is updated to the persisted value. (There may be a "flash of unstyled content" as `counter.value` is updated from the default value to the persisted value, since the `SharedPreferences` API is asynchronous.) Subsequently, whenever `counter.value` is updated, not only is any wrapping `ReactiveWidget` updated, but the new value is asynchronously written through to the `SharedPreferences` persistence cache.
+
+## Where to store state
+
+There are good suggestions in [this Medium post](https://suragch.medium.com/flutter-state-management-for-minimalists-4c71a2f2f0c1) about how to use [`GetIt`](https://pub.dev/packages/get_it) to store state, using a singleton service locator pattern. Note that the `flutter_reactive_widget` library simplifies much of the boilerplate suggested in this medium post, compared to `ValueNotifier` / `ValueListenableBuilder`.
