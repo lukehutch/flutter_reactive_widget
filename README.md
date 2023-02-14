@@ -39,7 +39,10 @@ First in `main`, initialize `PersistentReactiveValue` (which loads cached values
 
 ```dart
 main() async {
+  // Both of the following lines are needed, in this order
+  WidgetsFlutterBinding.ensureInitialized();
   await PersistentReactiveValue.init();
+
   runApp(App());
 }
 ```
@@ -58,32 +61,41 @@ Whenever `counter.value` is set in future, not only is any wrapping `ReactiveWid
 
 There are good suggestions in [this Medium post](https://suragch.medium.com/flutter-state-management-for-minimalists-4c71a2f2f0c1) about how to use [`GetIt`](https://pub.dev/packages/get_it) to organize state in your application. Applying that idea to `flutter_reactive_widget`:
 
-#### `main.dart`:
+#### `main.dart`
+
+Call `setUpGetIt()` from `main`:
 
 ```dart
 import 'package:my_app/pages/home_page.dart';
 import './service_locator.dart';
 
 main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await PersistentReactiveValue.init();
+
+  // Register state singletons
   setUpGetIt();
+
   runApp(HomePage());
 }
 ```
 
-#### `service_locator.dart`:
+#### `service_locator.dart`
+
+Register all your state-containing classes as singletons using `GetIt`, with one state class per page (i.e. create `home_page_state.dart` for page `home_page.dart`):
 
 ```dart
 import 'package:my_app/pages/home_page_state.dart';
 import 'package:get_it/get_it.dart';
 
 void setUpGetIt() {
-  // Register all your state classes here, one per stateful page
   GetIt.instance.registerLazySingleton<HomePageState>(() => HomePageState());
 }
 ```
 
-#### `pages/home_page_state.dart`:
+#### `pages/home_page_state.dart`
+
+Define each state class:
 
 ```dart
 import 'package:flutter_reactive_widget/flutter_reactive_widget.dart';
@@ -94,7 +106,9 @@ class HomePageState {
 }
 ```
 
-#### `pages/home_page.dart`:
+#### `pages/home_page.dart`
+
+Get the state singleton class instance(s) you need to read state from, using `GetIt.instance<T>()`:
 
 ```dart
 import 'package:my_app/pages/home_page_state.dart';
