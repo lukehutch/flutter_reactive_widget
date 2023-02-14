@@ -27,6 +27,8 @@ ReactiveWidget(
 ),
 ```
 
+The mere reference to `counter.value` within this `ReactiveWidget` causes this `ReactiveWidget` to start listening for changes to `counter.value`. (This listener is automatically removed if the widget is disposed.)
+
 Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value.
 
 ## Persistent `ReactiveValue` subclass
