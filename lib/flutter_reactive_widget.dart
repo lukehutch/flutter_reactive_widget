@@ -33,6 +33,12 @@ class _ReactiveWidgetState extends State<ReactiveWidget> {
     // Remove all ReactiveValue listeners when the widget tree is being rebuilt,
     // since the set of referenced ReactiveValue objects may change
     removeAllListeners();
+    // Make sure only one `build` method is being called at once (`build` does
+    // not currently work recursively, but maybe this will change in a future
+    // version of Flutter)
+    if (ReactiveValue._currReactiveWidgetState != null) {
+      throw Exception('build() should not be called recursively');
+    }
     // Record this ReactiveWidget as being built
     ReactiveValue._currReactiveWidgetState = this;
     try {
