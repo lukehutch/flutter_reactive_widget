@@ -33,7 +33,7 @@ class HomeView extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.plus_one_outlined),
             onPressed: () {
-              counter.value += 1;
+              counter.value++;
             },
           ),
         ],
