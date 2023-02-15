@@ -34,10 +34,7 @@ Then simply wrap any code that reads `counter.value` in a `ReactiveWidget`:
 
 ```dart
 ReactiveWidget(
-  () => Text(
-    '${counter.value}',
-    style: const TextStyle(fontSize: 20),
-  ),
+  () => Text('${counter.value}'),
 ),
 ```
 
