@@ -87,7 +87,7 @@ main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await PersistentReactiveValue.init();
 
-  // Register state singletons
+  // Register state singletons (defined in service_locator.dart)
   setUpGetIt();
 
   runApp(HomePage());
@@ -102,8 +102,10 @@ Register all your state-containing classes as singletons using `GetIt`, with one
 import 'package:my_app/pages/home_page_state.dart';
 import 'package:get_it/get_it.dart';
 
+final getIt = GetIt.instance;
+
 void setUpGetIt() {
-  GetIt.instance.registerLazySingleton<HomePageState>(() => HomePageState());
+  getIt.registerLazySingleton<HomePageState>(() => HomePageState());
 }
 ```
 
@@ -122,16 +124,16 @@ class HomePageState {
 
 #### `pages/home_page.dart`
 
-Get the state singleton class instance(s) you need to read state from, using `GetIt.instance<T>()`:
+Get the state singleton class instance(s) you need to read state from, using `GetIt.instance<T>()` (or `getIt<T>`, if you import `service_locator.dart`):
 
 ```dart
 import 'package:my_app/pages/home_page_state.dart';
 import 'package:flutter_reactive_widget/flutter_reactive_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import './service_locator.dart';
 
 // Get the state of the page
-final _homePageState = GetIt.instance<HomePageState>();
+final _homePageState = getIt<HomePageState>();
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
