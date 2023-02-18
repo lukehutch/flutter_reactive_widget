@@ -62,14 +62,15 @@ main() async {
 Then you can use  `PersistentReactiveValue` rather than `ReactiveValue`:
 
 ```dart
-final counter = PersistentReactiveValue<int>(/* key */ "counter", /* defaultValue */ 0);
+final counter = PersistentReactiveValue<int>(
+      /* key */ "counter", /* defaultValue */ 0);
 ```
 
 `counter.value` will be set to the default value `0` if it has never been set before, but if it has been set before in a previous run of the app, the previous value will be recovered from `SharedPreferences`, using the key `"counter"`.
 
 Whenever `counter.value` is set in future, not only is any wrapping `ReactiveWidget` updated, but the new value is asynchronously written through to the `SharedPreferences` persistence cache, using the same key.
 
-Note that for `PersistentReactiveValue<T>`, `T` cannot be a nullable type (`T?`), since null values cannot be distinguished from a value not being present in `SharedPreferences`. You may need to store the empty string rather than `null` for `PersistentReactiveValue<String>`, for example. Also, there is no way to unset a value to return to the default once the value has been set.
+Note that for `PersistentReactiveValue<T>`, if `T` is a nullable type (`T?`), then `defaultValue` is optional (may be null). However, note that null values cannot be distinguished from a value not being present in `SharedPreferences`. Therefore, storing `null` into a `PersistentReactiveValue<T>` removes the corresponding key from `SharedPreferences`, unsetting the value.
 
 ## Where to store state
 
