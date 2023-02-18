@@ -37,7 +37,10 @@ abstract class _PersistentReactiveValue<T> extends ReactiveValue<T> {
 class PersistentReactiveValue<T> extends _PersistentReactiveValue<T> {
   PersistentReactiveValue(String key, T defaultValue)
       : super(key, defaultValue) {
-    assert(!_isNullable, 'Type parameter must not be nullable: $runtimeType');
+    assert(
+        !_isNullable,
+        'Type parameter must not be nullable: $runtimeType' +
+            ' -- use PersistentReactiveNullableValue instead');
     switch (runtimeType) {
       case PersistentReactiveValue<int>:
         super.value = _storage!.getInt(_key) as T? ?? defaultValue;
@@ -88,7 +91,10 @@ class PersistentReactiveValue<T> extends _PersistentReactiveValue<T> {
 class PersistentReactiveNullableValue<T> extends _PersistentReactiveValue<T?> {
   PersistentReactiveNullableValue(String key, [T? defaultValue])
       : super(key, defaultValue) {
-    assert(_isNullable, 'Type parameter must be nullable: $runtimeType');
+    assert(
+        _isNullable,
+        'Type parameter must be nullable: $runtimeType' +
+            ' -- use PersistentReactiveValue instead');
     switch (runtimeType) {
       case PersistentReactiveValue<int?>:
         super.value = _storage!.getInt(_key) as T? ?? defaultValue;
