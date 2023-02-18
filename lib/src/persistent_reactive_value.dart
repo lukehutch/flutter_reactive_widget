@@ -66,6 +66,7 @@ class PersistentReactiveValue<T> extends ReactiveValue<T?> {
     super.value = newValue;
     switch (runtimeType) {
       case PersistentReactiveValue<int>:
+      case PersistentReactiveValue<int?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
@@ -73,6 +74,7 @@ class PersistentReactiveValue<T> extends ReactiveValue<T?> {
         }
         break;
       case PersistentReactiveValue<bool>:
+      case PersistentReactiveValue<bool?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
@@ -80,6 +82,7 @@ class PersistentReactiveValue<T> extends ReactiveValue<T?> {
         }
         break;
       case PersistentReactiveValue<double>:
+      case PersistentReactiveValue<double?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
@@ -87,6 +90,7 @@ class PersistentReactiveValue<T> extends ReactiveValue<T?> {
         }
         break;
       case PersistentReactiveValue<String>:
+      case PersistentReactiveValue<String?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
@@ -94,6 +98,7 @@ class PersistentReactiveValue<T> extends ReactiveValue<T?> {
         }
         break;
       case PersistentReactiveValue<List<String>>:
+      case PersistentReactiveValue<List<String>?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
