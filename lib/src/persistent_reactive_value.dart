@@ -96,19 +96,19 @@ class PersistentReactiveNullableValue<T> extends _PersistentReactiveValue<T?> {
         'Type parameter must be nullable: $runtimeType' +
             ' -- use PersistentReactiveValue instead');
     switch (runtimeType) {
-      case PersistentReactiveValue<int?>:
+      case PersistentReactiveNullableValue<int?>:
         super.value = _storage!.getInt(_key) as T? ?? defaultValue;
         break;
-      case PersistentReactiveValue<bool?>:
+      case PersistentReactiveNullableValue<bool?>:
         super.value = _storage!.getBool(_key) as T? ?? defaultValue;
         break;
-      case PersistentReactiveValue<double?>:
+      case PersistentReactiveNullableValue<double?>:
         super.value = _storage!.getDouble(_key) as T? ?? defaultValue;
         break;
-      case PersistentReactiveValue<String?>:
+      case PersistentReactiveNullableValue<String?>:
         super.value = _storage!.getString(_key) as T? ?? defaultValue;
         break;
-      case PersistentReactiveValue<List<String>?>:
+      case PersistentReactiveNullableValue<List<String>?>:
         super.value = _storage!.getStringList(_key) as T? ?? defaultValue;
         break;
       default:
@@ -120,35 +120,35 @@ class PersistentReactiveNullableValue<T> extends _PersistentReactiveValue<T?> {
   set value(T? newValue) {
     super.value = newValue;
     switch (runtimeType) {
-      case PersistentReactiveValue<int?>:
+      case PersistentReactiveNullableValue<int?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
           _storage!.setInt(_key, newValue as int);
         }
         break;
-      case PersistentReactiveValue<bool?>:
+      case PersistentReactiveNullableValue<bool?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
           _storage!.setBool(_key, newValue as bool);
         }
         break;
-      case PersistentReactiveValue<double?>:
+      case PersistentReactiveNullableValue<double?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
           _storage!.setDouble(_key, newValue as double);
         }
         break;
-      case PersistentReactiveValue<String?>:
+      case PersistentReactiveNullableValue<String?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
           _storage!.setString(_key, newValue as String);
         }
         break;
-      case PersistentReactiveValue<List<String>?>:
+      case PersistentReactiveNullableValue<List<String>?>:
         if (newValue == null) {
           _storage!.remove(_key);
         } else {
