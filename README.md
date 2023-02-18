@@ -46,13 +46,13 @@ Any event handler that modifies `counter.value` will now trigger the `ReactiveWi
 
 You can also persist values across app restarts by using `PersistentReactiveValue` rather than `ReactiveValue`.
 
-First in `main`, you need to initialize `WidgetsFlutterBinding` and then you need to call `await PersistentReactiveValue.init()` (which loads any persisted values from the backing store).
+First in `main`, you need to initialize `WidgetsFlutterBinding` and then you need to call `await initPersistentReactiveValue()` (defined in `flutter_reactive_widget.dart`), which starts `SharedPreferences` and loads any persisted values from the backing store.
 
 ```dart
 main() async {
   // Both of the following lines are needed, in this order
   WidgetsFlutterBinding.ensureInitialized();
-  await PersistentReactiveValue.init();
+  await initPersistentReactiveValue();
   
   // Then run the app
   runApp(App());
@@ -63,14 +63,16 @@ Then you can use  `PersistentReactiveValue` rather than `ReactiveValue`:
 
 ```dart
 final counter = PersistentReactiveValue<int>(
-      /* key */ "counter", /* defaultValue */ 0);
+      /* key */ 'counter', /* defaultValue */ 0);
 ```
 
-`counter.value` will be set to the default value `0` if it has never been set before, but if it has been set before in a previous run of the app, the previous value will be recovered from `SharedPreferences`, using the key `"counter"`.
+`counter.value` will be set to the default value `0` if it has never been set before, but if it has been set before in a previous run of the app, the previous value will be recovered from `SharedPreferences`, using the key `'counter'`.
 
 Whenever `counter.value` is set in future, not only is any wrapping `ReactiveWidget` updated, but the new value is asynchronously written through to the `SharedPreferences` persistence cache, using the same key.
 
-Note that for `PersistentReactiveValue<T>`, if `T` is a nullable type (`T?`), then `defaultValue` is optional (may be null). However, note that null values cannot be distinguished from a value not being present in `SharedPreferences`. Therefore, storing `null` into a `PersistentReactiveValue<T>` removes the corresponding key from `SharedPreferences`, unsetting the value.
+Note that for `PersistentReactiveValue<T>`, `T` cannot be a nullable type (`T?`), since null values cannot be distinguished from a value not being present in `SharedPreferences`.
+
+If you want to be able to "store" null values in SharedPreferences (which amounts to removing the key from `SharedPreferences` if you try to set a null value), then use `PersistentReactiveNullableValue<T?>`. For this class, `defaultValue` is optional.
 
 ## Where to store state
 
@@ -86,7 +88,7 @@ import './service_locator.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await PersistentReactiveValue.init();
+  await initPersistentReactiveValue();
 
   // Register state singletons (defined in service_locator.dart)
   setUpGetIt();
