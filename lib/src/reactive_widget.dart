@@ -90,4 +90,11 @@ class ReactiveValue<T> extends ValueNotifier<T> {
     _currReactiveWidgetState?._listenTo(this);
     return super.value;
   }
+
+  /// Allow notifyListeners() to be manually invoked, e.g.
+  /// when items are added to or removed from a ReactiveValue<Set<T>>
+  @override
+  void notifyListeners() {
+    super.notifyListeners();
+  }
 }
