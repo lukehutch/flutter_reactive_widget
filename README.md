@@ -92,7 +92,7 @@ If you create `final set = ReactiveValue<Set<String>>({});` and then you call `s
 
 ```dart
 _addFlag(bool flag) {
-  bool changed = flag ? set.add('flag') : set.remove('flag');
+  bool changed = flag ? set.value.add('flag') : set.value.remove('flag');
   if (changed) {
     set.notifyListeners();
   }
