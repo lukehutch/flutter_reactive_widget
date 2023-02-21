@@ -91,10 +91,9 @@ class ReactiveValue<T> extends ValueNotifier<T> {
     return super.value;
   }
 
-  /// Allow notifyListeners() to be manually invoked, e.g.
-  /// when items are added to or removed from a ReactiveValue<Set<T>>
-  @override
-  void notifyListeners() {
+  /// Used to manually invoke notifyListeners(), e.g. when items are
+  /// added to or removed from a ReactiveValue<Set<T>>
+  void notifyChanged() {
     super.notifyListeners();
   }
 }
