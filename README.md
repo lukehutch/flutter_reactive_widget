@@ -99,9 +99,11 @@ _addFlag(bool flag) {
 }
 ```
 
-## Lifecycle, and where to store state
+## Removing `ReactiveValue` listeners in `StatefulWidget`s' `State.dispose()` method
 
-If you are instantiating a `ReactiveValue` in a field of a `StatefulWidget`, make sure your widget's `dispose()` method calls the `ReactiveValue`'s `dispose()` method to remove all listeners when the widget is disposed.
+If you are instantiating a `ReactiveValue` in a field of a `StatefulWidget`'s `State<T>` object, make sure your `State<T>`'s `dispose()` method calls the `ReactiveValue`'s `dispose()` method to remove all listeners when the widget is disposed, in order to prevent memory leaks.
+
+## Lifecycle, and where to store state
 
 If you want a `ReactiveValue`'s to exist for the lifetime of the app, there are good suggestions in [this Medium post](https://suragch.medium.com/flutter-state-management-for-minimalists-4c71a2f2f0c1) about how to use [`GetIt`](https://pub.dev/packages/get_it) to organize state in your application. Applying that idea to `flutter_reactive_widget`:
 
