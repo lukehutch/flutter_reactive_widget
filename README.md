@@ -42,7 +42,7 @@ The mere reference to `counter.value` within this `ReactiveWidget` causes this `
 
 Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value.
 
-## Persistent `ReactiveValue` subclass
+## `PersistentReactiveValue` subclass
 
 You can also persist values across app restarts by using `PersistentReactiveValue` rather than `ReactiveValue`.
 
@@ -70,13 +70,40 @@ final counter = PersistentReactiveValue<int>(
 
 Whenever `counter.value` is set in future, not only is any wrapping `ReactiveWidget` updated, but the new value is asynchronously written through to the `SharedPreferences` persistence cache, using the same key.
 
+## `PersistentReactiveNullableValue` subclass
+
 Note that for `PersistentReactiveValue<T>`, `T` cannot be a nullable type (`T?`), since null values cannot be distinguished from a value not being present in `SharedPreferences`.
 
 If you want to be able to "store" null values in SharedPreferences (which amounts to removing the key from `SharedPreferences` if you try to set a null value), then use `PersistentReactiveNullableValue<T?>`. For this class, `defaultValue` is optional.
 
-## Where to store state
+## `ValidatingReactiveValue` subclass
 
-There are good suggestions in [this Medium post](https://suragch.medium.com/flutter-state-management-for-minimalists-4c71a2f2f0c1) about how to use [`GetIt`](https://pub.dev/packages/get_it) to organize state in your application. Applying that idea to `flutter_reactive_widget`:
+The `ValidatingReactiveValue` subclass of `ReactiveValue` has an additional field, `validationError`, which is itself a `ReactiveValue<String?>`. This field is updated whenever the `ValidatingReactiveValue`'s value changes, by calling the `validate` function that is passed into the `ValidatingReactiveValue` constructor. For example:
+
+```dart
+final age = ValidatingReactiveValue<int?>(null, (a) => a == null ? 'Please specify age' : null);
+
+// You can now listen to either `age.validationError` or `age.value` in a `ReactiveWidget`.
+```
+
+## Manually notifying listeners of deeper changes to value
+
+If you create `final set = ReactiveValue<Set<String>>({});` and then you call `set.value.add('abc')`, `set`'s listeners will not be notified of the change, because the reference to the set itself (i.e. `set.value`) has not changed. You can manually call listeners in this case by doing something like:
+
+```dart
+_addFlag(bool flag) {
+  bool changed = flag ? set.add('flag') : set.remove('flag');
+  if (changed) {
+    set.notifyListeners();
+  }
+}
+```
+
+## Lifecycle, and where to store state
+
+If you are instantiating a `ReactiveValue` in a field of a `StatefulWidget`, make sure your widget's `dispose()` method calls the `ReactiveValue`'s `dispose()` method to remove all listeners when the widget is disposed.
+
+If you want a `ReactiveValue`'s to exist for the lifetime of the app, there are good suggestions in [this Medium post](https://suragch.medium.com/flutter-state-management-for-minimalists-4c71a2f2f0c1) about how to use [`GetIt`](https://pub.dev/packages/get_it) to organize state in your application. Applying that idea to `flutter_reactive_widget`:
 
 #### `main.dart`
 
