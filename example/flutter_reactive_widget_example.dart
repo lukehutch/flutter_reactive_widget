@@ -2,6 +2,9 @@ import 'package:flutter_reactive_widget/flutter_reactive_widget.dart';
 import 'package:flutter/material.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initPersistentReactiveValue();
+  
   runApp(
     const MaterialApp(
       title: "Application",
