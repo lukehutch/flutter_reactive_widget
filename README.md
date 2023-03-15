@@ -1,6 +1,6 @@
 # `ReactiveWidget` and `ReactiveValue` for Flutter
 
-Simple state management / reactive state tracking for Flutter, reducing the boilerplate compared to the insanely complex [state management approaches](https://docs.flutter.dev/development/data-and-backend/state-mgmt/options) that are in common use.
+Simple state management / reactive state tracking for Flutter, reducing boilerplate compared to all the insanely complex [state management approaches](https://docs.flutter.dev/development/data-and-backend/state-mgmt/options) in common use.
 
 ## Usage
 
@@ -16,7 +16,7 @@ Declare your state using `ReactiveValue<T>` (which extends [`ValueNotifier<T>`](
 final counter = ReactiveValue<int>(0);
 ```
 
-Then simply wrap any code that reads `counter.value` in a `ReactiveWidget`:
+Then simply wrap any code that reads `counter.value` in a `ReactiveWidget`. The mere reference to `counter.value` within this `ReactiveWidget` causes this `ReactiveWidget` to start listening for changes to `counter.value`. (This listener is automatically removed if the widget is disposed.)
 
 ```dart
 ReactiveWidget(
@@ -24,9 +24,18 @@ ReactiveWidget(
 ),
 ```
 
-The mere reference to `counter.value` within this `ReactiveWidget` causes this `ReactiveWidget` to start listening for changes to `counter.value`. (This listener is automatically removed if the widget is disposed.)
+Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value. (`counter.value` can be modifed anywhere, the update does not need to be wrapped in a `ReactiveWidget`.)
 
-Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value. Reactivity couldn't be simpler than this!
+```dart
+IconButton(
+  icon: const Icon(Icons.plus_one),
+  onPressed: () {
+    counter.value++;
+  },
+),
+```
+
+Building a reactive UI couldn't be simpler than this!
 
 ## Adding the library dependency
 
@@ -36,7 +45,7 @@ To be able to import the library, you need to add a dependency upon it in `pubsp
 dependencies:
   flutter:
     sdk: flutter
-  flutter_reactive_widget: ^1.0.1
+  flutter_reactive_widget: ^1.0.2
 ```
 
 Then run `flutter pub get`.

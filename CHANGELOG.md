@@ -1,3 +1,7 @@
+### 1.0.2
+
+Updated docs (no functionality changes)
+
 ### 1.0.1
 
 Updated docs (no functionality changes)
