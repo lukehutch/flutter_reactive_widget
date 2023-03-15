@@ -207,3 +207,7 @@ class HomePage extends StatelessWidget {
   }
 }
 ```
+
+## Author
+
+`flutter_reactive_widget` was written by Luke Hutchison, and is released under the MIT license.
