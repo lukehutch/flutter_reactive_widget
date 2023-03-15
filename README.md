@@ -4,20 +4,6 @@ Simple state management / reactive state tracking for Flutter, reducing the boil
 
 ## Usage
 
-Depend upon this github project in `pubspec.yaml`:
-
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  flutter_reactive_widget:
-    git:
-      url: https://github.com/lukehutch/flutter_reactive_widget.git
-      ref: main
-```
-
-Then run `flutter pub get`.
-
 Import the library:
 
 ```dart
@@ -40,11 +26,24 @@ ReactiveWidget(
 
 The mere reference to `counter.value` within this `ReactiveWidget` causes this `ReactiveWidget` to start listening for changes to `counter.value`. (This listener is automatically removed if the widget is disposed.)
 
-Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value.
+Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value. Reactivity couldn't be simpler than this!
+
+## Adding the library dependency
+
+To be able to import the library, you need to add a dependency upon it in `pubspec.yaml`:
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_reactive_widget: ^1.0.0
+```
+
+Then run `flutter pub get`.
 
 ## `PersistentReactiveValue` subclass
 
-You can also persist values across app restarts by using `PersistentReactiveValue` rather than `ReactiveValue`.
+`ReactiveValue` resets to its initial value every time the app is restarted. You can also persist values across app restarts by using `PersistentReactiveValue` rather than `ReactiveValue`.
 
 First in `main`, you need to initialize `WidgetsFlutterBinding` and then you need to call `await initPersistentReactiveValue()` (defined in `flutter_reactive_widget.dart`), which starts `SharedPreferences` and loads any persisted values from the backing store.
 
