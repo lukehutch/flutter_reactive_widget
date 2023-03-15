@@ -1,3 +1,12 @@
+// flutter_reactive_widget library
+//
+// (C) 2023 Luke Hutchison
+//
+// Published under MIT license
+//
+// Source hosted at:
+// https://github.com/lukehutch/flutter_reactive_widget
+
 import 'package:flutter/widgets.dart';
 
 /// A reactive widget. Will be rebuilt when the value of any [ReactiveValue]
