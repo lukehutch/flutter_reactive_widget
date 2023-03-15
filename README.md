@@ -36,7 +36,7 @@ To be able to import the library, you need to add a dependency upon it in `pubsp
 dependencies:
   flutter:
     sdk: flutter
-  flutter_reactive_widget: ^1.0.0
+  flutter_reactive_widget: ^1.0.1
 ```
 
 Then run `flutter pub get`.
