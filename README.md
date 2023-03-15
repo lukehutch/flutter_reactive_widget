@@ -4,7 +4,7 @@ Simple state management / reactive state tracking for Flutter, reducing boilerpl
 
 ## Usage
 
-Import the library:
+Import the library (see next section for how to add the library dependency):
 
 ```dart
 import 'package:flutter_reactive_widget/flutter_reactive_widget.dart';
@@ -38,6 +38,8 @@ IconButton(
 Building a reactive UI couldn't be simpler than this!
 
 ## Adding the library dependency
+
+[`flutter_reactive_widget` is hosted on pub.dev](https://pub.dev/packages/flutter_reactive_widget).
 
 To be able to import the library, you need to add a dependency upon it in `pubspec.yaml`:
 
