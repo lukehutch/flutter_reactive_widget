@@ -89,7 +89,8 @@ If you want to be able to "store" null values in SharedPreferences (which amount
 The `ValidatingReactiveValue` subclass of `ReactiveValue` has an additional field, `validationError`, which is itself a `ReactiveValue<String?>`. This field is updated whenever the `ValidatingReactiveValue`'s value changes, by calling the `validate` function that is passed into the `ValidatingReactiveValue` constructor. For example:
 
 ```dart
-final age = ValidatingReactiveValue<int?>(null, (a) => a == null ? 'Please specify age' : null);
+final age = ValidatingReactiveValue<int?>(null,
+        (a) => a == null ? 'Please specify age' : null);
 
 // You can now listen to either `age.validationError` or `age.value` in a `ReactiveWidget`.
 ```
