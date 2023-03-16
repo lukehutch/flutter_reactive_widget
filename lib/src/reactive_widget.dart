@@ -9,6 +9,9 @@
 
 import 'package:flutter/widgets.dart';
 
+// The stack of ReactiveWidgets that are being built
+final _currReactiveWidgetState = <_ReactiveWidgetState>[];
+
 /// A reactive widget. Will be rebuilt when the value of any [ReactiveValue]
 /// object read by this `ReactiveWidget` is  changed.
 class ReactiveWidget extends StatefulWidget {
@@ -35,20 +38,15 @@ class _ReactiveWidgetState extends State<ReactiveWidget> {
     // Remove all ReactiveValue listeners when the widget tree is being rebuilt,
     // since the set of referenced ReactiveValue objects may change
     removeAllListeners();
-    // Make sure only one `build` method is being called at once (`build` does
-    // not currently work recursively, but maybe this will change in a future
-    // version of Flutter)
-    if (ReactiveValue._currReactiveWidgetState != null) {
-      throw Exception('build() should not be called recursively');
-    }
     // Record this ReactiveWidget as being built
-    ReactiveValue._currReactiveWidgetState = this;
+    _currReactiveWidgetState.add(this);
     try {
       // Call ReactiveWidget.build()
       _cachedWidget = (context.widget as ReactiveWidget)._build();
       return _cachedWidget!;
     } finally {
-      ReactiveValue._currReactiveWidgetState = null;
+      // Pop this ReactiveWidget from the stack
+      _currReactiveWidgetState.removeLast();
     }
   }
 
@@ -92,15 +90,14 @@ class _ReactiveWidgetState extends State<ReactiveWidget> {
 /// A reactive value, automatically listened to by any [ReactiveWidget] that
 /// tries to read the value.
 class ReactiveValue<T> extends ValueNotifier<T> {
-  // The current ReactiveWidget that is being built
-  static _ReactiveWidgetState? _currReactiveWidgetState;
-
   ReactiveValue(super.value);
 
   @override
   T get value {
     // Ensure that the wrapping ReactiveWidget is listening to value changes
-    _currReactiveWidgetState?._listenTo(this);
+    if (_currReactiveWidgetState.isNotEmpty) {
+      _currReactiveWidgetState.last._listenTo(this);
+    }
     return super.value;
   }
 
