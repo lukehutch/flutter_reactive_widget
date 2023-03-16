@@ -4,19 +4,13 @@ Simple state management / reactive state tracking for Flutter, reducing boilerpl
 
 ## Usage
 
-Import the library (see next section for how to add the library dependency):
-
-```dart
-import 'package:flutter_reactive_widget/flutter_reactive_widget.dart';
-```
-
 Declare your state using `ReactiveValue<T>` (which extends [`ValueNotifier<T>`](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html)):
 
 ```dart
 final counter = ReactiveValue<int>(0);
 ```
 
-Then simply wrap any code that reads `counter.value` in a `ReactiveWidget`. The mere reference to `counter.value` within this `ReactiveWidget` causes this `ReactiveWidget` to start listening for changes to `counter.value`. (This listener is automatically removed if the widget is disposed.)
+Then simply wrap any code that needs to react to changes in `counter.value` in a `ReactiveWidget`. If `counter.value` is read while a `ReactiveWidget`'s `build()` method is running, the `ReactiveWidget` will start listening for changes to `counter.value`. (This listener is automatically removed if the widget is disposed.)
 
 ```dart
 ReactiveWidget(
@@ -41,7 +35,7 @@ Building a reactive UI couldn't be simpler than this!
 
 [`flutter_reactive_widget` is hosted on pub.dev](https://pub.dev/packages/flutter_reactive_widget).
 
-To be able to import the library, you need to add a dependency upon it in `pubspec.yaml`:
+To be able to import the library, you need to add a dependency upon it in `pubspec.yaml`, then run `flutter pub get`:
 
 ```yaml
 dependencies:
@@ -50,7 +44,11 @@ dependencies:
   flutter_reactive_widget: ^1.0.2
 ```
 
-Then run `flutter pub get`.
+Import the library in your code:
+
+```dart
+import 'package:flutter_reactive_widget/flutter_reactive_widget.dart';
+```
 
 ## `PersistentReactiveValue` subclass
 
