@@ -1,10 +1,14 @@
+### 1.0.3
+
+Allow `ReactiveWidget`s to be nested.
+
 ### 1.0.2
 
-Updated docs (no functionality changes)
+Updated docs (no functionality changes).
 
 ### 1.0.1
 
-Updated docs (no functionality changes)
+Updated docs (no functionality changes).
 
 ### 1.0.0
 
