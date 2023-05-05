@@ -1,6 +1,6 @@
 # `ReactiveWidget` and `ReactiveValue` for Flutter
 
-Simple state management / reactive state tracking for Flutter, reducing boilerplate compared to all the insanely complex [state management approaches](https://docs.flutter.dev/development/data-and-backend/state-mgmt/options) in common use.
+The simplest possible state management / reactive state tracking for Flutter, reducing boilerplate compared to all the insanely complex [state management approaches](https://docs.flutter.dev/development/data-and-backend/state-mgmt/options) in common use.
 
 ## Usage
 
@@ -10,7 +10,9 @@ Declare your state using `ReactiveValue<T>` (which extends [`ValueNotifier<T>`](
 final counter = ReactiveValue<int>(0);
 ```
 
-Then simply wrap any code that needs to react to changes in `counter.value` in a `ReactiveWidget`. If `counter.value` is read while a `ReactiveWidget`'s `build()` method is running, the `ReactiveWidget` will start listening for changes to `counter.value`. (This listener is automatically removed if the widget is disposed.)
+Then simply wrap any code that needs to react to changes in `counter.value` in a `ReactiveWidget` (which accepts a zero-arg lambda to be called by the `ReactiveWidget`'s `build` method).
+
+If `counter.value` is read while the `ReactiveWidget`'s `build()` method is running, then the `ReactiveWidget` will start listening for changes to `counter.value`. (This listener is automatically removed if the widget is disposed.)
 
 ```dart
 ReactiveWidget(
@@ -18,7 +20,9 @@ ReactiveWidget(
 ),
 ```
 
-Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value. (`counter.value` can be modifed anywhere, the update does not need to be wrapped in a `ReactiveWidget`.)
+Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value, triggering `setState` to be called on the `ReactiveWidget` in a post-frame callback.
+
+`counter.value` can be modifed from anywhere -- the update does not need to be wrapped in a `ReactiveWidget`:
 
 ```dart
 IconButton(
@@ -41,7 +45,7 @@ To be able to import the library, you need to add a dependency upon it in `pubsp
 dependencies:
   flutter:
     sdk: flutter
-  flutter_reactive_widget: ^1.0.3
+  flutter_reactive_widget: ^1.0.4
 ```
 
 Import the library in your code:
