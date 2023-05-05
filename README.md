@@ -20,7 +20,7 @@ ReactiveWidget(
 ),
 ```
 
-Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value, triggering `setState` to be called on the `ReactiveWidget` in a post-frame callback.
+Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value, by scheduling `setState` to be called on the `ReactiveWidget` in a post-frame callback.
 
 `counter.value` can be modifed from anywhere -- the update does not need to be wrapped in a `ReactiveWidget`:
 
