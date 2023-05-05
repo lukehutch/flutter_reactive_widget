@@ -79,10 +79,13 @@ class _ReactiveWidgetState extends State<ReactiveWidget> {
     // Need to defer calling setState until after `build` has completed:
     // https://stackoverflow.com/a/59478165/3950982
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        // Calling setState marks this ReactiveWidget as needing to be rebuilt.
-        _cachedWidget = null;
-      });
+      // Widget may no longer be mounted, if dispose() was called after build()
+      if (mounted) {
+        setState(() {
+          // Calling setState marks this ReactiveWidget as needing to be rebuilt.
+          _cachedWidget = null;
+        });
+      }
     });
   }
 }
