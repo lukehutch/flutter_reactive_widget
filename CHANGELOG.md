@@ -1,3 +1,7 @@
+### 1.0.5
+
+Fix issue where reactive widget would not update in async context (#5).
+
 ### 1.0.4
 
 Check if widget is mounted before calling `setState` (fixes #3).
