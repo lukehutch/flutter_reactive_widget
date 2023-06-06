@@ -8,6 +8,7 @@
 // https://github.com/lukehutch/flutter_reactive_widget
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter/scheduler.dart';
 
 // The stack of ReactiveWidgets that are being built
 final _currReactiveWidgetState = <_ReactiveWidgetState>[];
@@ -74,19 +75,25 @@ class _ReactiveWidgetState extends State<ReactiveWidget> {
     }
   }
 
+// Mark the ReactiveWidget as needing to be rebuilt.
+  void _updateReactiveWidget() {
+    // Widget may no longer be mounted, if dispose() was called after build()
+    if (mounted) {
+      setState(() => _cachedWidget = null);
+    }
+  }
+
   // Add a listener to call setState when the ReactiveValue value changes
   void _listener() {
-    // Need to defer calling setState until after `build` has completed:
-    // https://stackoverflow.com/a/59478165/3950982
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Widget may no longer be mounted, if dispose() was called after build()
-      if (mounted) {
-        setState(() {
-          // Calling setState marks this ReactiveWidget as needing to be rebuilt.
-          _cachedWidget = null;
-        });
-      }
-    });
+    if (SchedulerBinding.instance.schedulerPhase == SchedulerPhase.idle) {
+      // Set state immediately if scheduler is idle
+      _updateReactiveWidget();
+    } else {
+      // Need to defer calling setState until after `build` has completed:
+      // https://stackoverflow.com/a/59478165/3950982
+      WidgetsBinding.instance
+          .addPostFrameCallback((_) => _updateReactiveWidget());
+    }
   }
 }
 
