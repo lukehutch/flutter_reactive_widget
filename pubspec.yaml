@@ -4,7 +4,7 @@ version: 1.0.5
 homepage: https://github.com/lukehutch/flutter_reactive_widget
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.17.0 <4.0.0'
 
 dependencies:
   flutter: 
