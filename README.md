@@ -4,13 +4,15 @@ The simplest possible state management / reactive state tracking for Flutter, re
 
 ## Usage
 
-Declare your state using `ReactiveValue<T>` (which extends [`ValueNotifier<T>`](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html)):
+Building a reactive UI couldn't be simpler than this:
+
+(1) Declare your state using `ReactiveValue<T>` (which extends [`ValueNotifier<T>`](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html)):
 
 ```dart
 final counter = ReactiveValue<int>(0);
 ```
 
-Then simply wrap any code that needs to react to changes in `counter.value` in a `ReactiveWidget` (which accepts a zero-arg lambda to be called by the `ReactiveWidget`'s `build` method).
+(2) Wrap any code that needs to react to changes to `counter.value` in a `ReactiveWidget` (which accepts a zero-arg lambda to be called by the `ReactiveWidget`'s `build` method).
 
 If `counter.value` is read while the `ReactiveWidget`'s `build()` method is running, then the `ReactiveWidget` will start listening for changes to `counter.value`. (This listener is automatically removed if the widget is disposed.)
 
@@ -20,9 +22,7 @@ ReactiveWidget(
 ),
 ```
 
-Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value, by scheduling `setState` to be called on the `ReactiveWidget` in a post-frame callback.
-
-`counter.value` can be modifed from anywhere -- the update does not need to be wrapped in a `ReactiveWidget`:
+(3) Any event handler that modifies `counter.value` will now trigger the `ReactiveWidget` to be re-built with the new value, by scheduling `setState` to be called on the `ReactiveWidget` in a post-frame callback.
 
 ```dart
 IconButton(
@@ -33,7 +33,7 @@ IconButton(
 ),
 ```
 
-Building a reactive UI couldn't be simpler than this!
+`counter.value` can be modifed from anywhere except for a `build` method (since `build` methods should never mutate state).
 
 ## Adding the library dependency
 

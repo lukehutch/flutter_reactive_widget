@@ -75,27 +75,21 @@ class _ReactiveWidgetState extends State<ReactiveWidget> {
     }
   }
 
-// Mark the ReactiveWidget as needing to be rebuilt.
-  void _updateReactiveWidget() {
-    // Widget may no longer be mounted, if dispose() was called after build()
-    if (mounted) {
-      setState(() => _cachedWidget = null);
-    }
-  }
-
   // Add a listener to call setState when the ReactiveValue value changes
   void _listener() {
-    if (SchedulerBinding.instance.schedulerPhase ==
-        SchedulerPhase.persistentCallbacks) {
-      // Need to defer calling setState until after `build` has completed:
-      // https://stackoverflow.com/a/59478165/3950982
-      // It suffices to check whether persistent callbacks are being run:
-      // https://github.com/flutter/flutter/issues/128384#issuecomment-1580062544
-      WidgetsBinding.instance
-          .addPostFrameCallback((_) => _updateReactiveWidget());
-    } else {
-      // Set state immediately if persistent callbacks are not being called
-      _updateReactiveWidget();
+    // Don't allow mutating state during `build`
+    // https://github.com/flutter/flutter/issues/128384#issuecomment-1580110349
+    assert(
+        SchedulerBinding.instance.schedulerPhase !=
+                SchedulerPhase.persistentCallbacks &&
+            !(WidgetsBinding.instance.buildOwner?.debugBuilding ?? false),
+        'Do not mutate state (by setting a ReactiveValue\'s value) '
+        'during a build method. If you need to schedule an update, '
+        'use SchedulerBinding.instance.scheduleTask or similar.');
+    // Widget may no longer be mounted, if dispose() was called after build().
+    // setState() can only be called for mounted widgets.
+    if (mounted) {
+      setState(() => _cachedWidget = null);
     }
   }
 }
