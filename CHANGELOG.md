@@ -1,3 +1,11 @@
+### 1.0.7
+
+Further updates to fix #5.
+
+### 1.0.6
+
+(Ignore -- use 1.0.7)
+
 ### 1.0.5
 
 Fix issue where reactive widget would not update in async context (#5).

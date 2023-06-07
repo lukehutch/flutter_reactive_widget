@@ -85,14 +85,17 @@ class _ReactiveWidgetState extends State<ReactiveWidget> {
 
   // Add a listener to call setState when the ReactiveValue value changes
   void _listener() {
-    if (SchedulerBinding.instance.schedulerPhase == SchedulerPhase.idle) {
-      // Set state immediately if scheduler is idle
-      _updateReactiveWidget();
-    } else {
+    if (SchedulerBinding.instance.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
       // Need to defer calling setState until after `build` has completed:
       // https://stackoverflow.com/a/59478165/3950982
+      // It suffices to check whether persistent callbacks are being run:
+      // https://github.com/flutter/flutter/issues/128384#issuecomment-1580062544
       WidgetsBinding.instance
           .addPostFrameCallback((_) => _updateReactiveWidget());
+    } else {
+      // Set state immediately if persistent callbacks are not being called
+      _updateReactiveWidget();
     }
   }
 }
