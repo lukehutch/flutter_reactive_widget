@@ -39,13 +39,13 @@ IconButton(
 
 [`flutter_reactive_widget` is hosted on pub.dev](https://pub.dev/packages/flutter_reactive_widget).
 
-To be able to import the library, you need to add a dependency upon it in `pubspec.yaml`, then run `flutter pub get`:
+To be able to import the library, you need to add a dependency upon it in `pubspec.yaml` (replace `any` with the latest version, if you want to control the version), then run `flutter pub get`:
 
 ```yaml
 dependencies:
   flutter:
     sdk: flutter
-  flutter_reactive_widget: ^1.0.7
+  flutter_reactive_widget: any
 ```
 
 Import the library in your code:

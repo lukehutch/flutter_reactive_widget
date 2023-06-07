@@ -1,3 +1,9 @@
+### 1.0.8
+
+Disallow setting of `ReactiveValue.value` from build method:
+
+https://github.com/flutter/flutter/issues/128384#issuecomment-1580110349
+
 ### 1.0.7
 
 Further updates to fix #5.

@@ -84,8 +84,8 @@ class _ReactiveWidgetState extends State<ReactiveWidget> {
                 SchedulerPhase.persistentCallbacks &&
             !(WidgetsBinding.instance.buildOwner?.debugBuilding ?? false),
         'Do not mutate state (by setting a ReactiveValue\'s value) '
-        'during a build method. If you need to schedule an update, '
-        'use SchedulerBinding.instance.scheduleTask or similar.');
+        'during a `build` method. If you need to schedule an update, '
+        'use `SchedulerBinding.instance.scheduleTask` or similar.');
     // Widget may no longer be mounted, if dispose() was called after build().
     // setState() can only be called for mounted widgets.
     if (mounted) {
