@@ -1,10 +1,15 @@
 # `ReactiveWidget` and `ReactiveValue` for Flutter
 
-The simplest possible state management / reactive state tracking for Flutter, reducing boilerplate compared to all the insanely complex [state management approaches](https://docs.flutter.dev/development/data-and-backend/state-mgmt/options) in common use.
+
+## DEPRECATED
+
+I am deprecating this library, because I found an even simpler (and much better) mechanism for creating reactive UIs in Flutter: please use the [`flutter_reactive_value`](https://github.com/lukehutch/flutter_reactive_value) library instead of this one.
+
+The documentation and code for this `flutter_reactive_widget` library will still be hosted here, but this code will not see further development.
 
 ## Usage
 
-Building a reactive UI couldn't be simpler than this:
+This library provides a simple mechanism for creating a reactive UI in Flutter.
 
 (1) Declare your state using `ReactiveValue<T>` (which extends [`ValueNotifier<T>`](https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html)):
 

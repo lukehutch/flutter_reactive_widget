@@ -1,3 +1,7 @@
+### 1.0.9
+
+I am deprecating this library, because I found an even simpler (and much better) mechanism for creating reactive UIs in Flutter: please use the [`flutter_reactive_value`](https://github.com/lukehutch/flutter_reactive_value) library instead of this one.
+
 ### 1.0.8
 
 Disallow setting of `ReactiveValue.value` from build method:
